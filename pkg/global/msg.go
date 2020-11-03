@@ -22,3 +22,8 @@ func GetMsg(code int) string {
 
 	return MsgFlags[ERROR]
 }
+
+
+const (
+	WEB_ADMINS_LOGIN_EXPIRE = 86400 * 7
+)

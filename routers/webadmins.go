@@ -33,6 +33,7 @@ func initUserRouter(router *gin.Engine){
 		user.GET("/vcode", api.Code)
 		user.POST("/login", api.Login)
 		user.POST("/logout", api.Logout)
+		user.POST("/getSessionInfo", api.GetSessionInfo)
 	}
 }
 
