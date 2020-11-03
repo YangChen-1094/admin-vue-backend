@@ -1,0 +1,5 @@
+[INFO][models/captcha.go:32] 2020/11/03 11:14:00.459234 [set captchaId= WQaXXwRLCh0CCqAT0ft5 ,session= 0xc000071cc0]
+[INFO][models/captcha.go:32] 2020/11/03 11:14:06.437333 [set captchaId= XjBPlRZAv1uh0pCYIzYc ,session= 0xc0005fa410]
+[INFO][api/webadmins/user.go:26] 2020/11/03 11:28:10.778781 [map[]]
+[INFO][models/captcha.go:39] 2020/11/03 11:28:10.779758 [code= 3108 ,get captchaId= hzlURdX5ZeMVVT0sS6Tv ,session= 0xc00038b9f0]
+[INFO][api/webadmins/user.go:30] 2020/11/03 11:28:10.779758 [3108 true]

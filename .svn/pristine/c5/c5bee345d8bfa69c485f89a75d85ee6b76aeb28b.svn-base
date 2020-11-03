@@ -1,0 +1,25 @@
+[app]
+PageSize = 10
+JwtSecret = 23347$040412
+LogSavePath = logs/
+LogSaveName = log
+LogFileExt = log
+LogTimeFormat = 20060102
+
+[server]
+#debug or release
+CorsUrl = http://localhost:8082
+RunMode = debug
+HttpIp = 127.0.0.1
+HttpPort = 9090
+ReadTimeout = 60
+WriteTimeout = 60
+
+[database]
+Type = mysql
+User = root
+Password = abcd1234
+Host = 127.0.0.1:3306
+#Host = mysql:3306
+Name = my_gin
+TablePrefix = blog_

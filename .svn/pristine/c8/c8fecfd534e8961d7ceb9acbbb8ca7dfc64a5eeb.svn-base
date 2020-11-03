@@ -1,0 +1,68 @@
+info:
+  contact: {}
+  license: {}
+paths:
+  /v1/article/getList:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 用户id获取文章列表
+      parameters:
+      - description: 用户id
+        in: header
+        name: user_id
+        required: true
+        type: integer
+      - description: 禁用状态0禁用，1正常
+        in: header
+        name: state
+        required: true
+        type: integer
+      - description: 页数
+        in: header
+        name: page
+        required: true
+        type: integer
+      - description: 每页多少文章
+        in: header
+        name: size
+        required: true
+        type: integer
+      - description: 验签id
+        in: header
+        name: auth_id
+        required: true
+        type: integer
+      - description: token
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: 获取文章列表
+  /v1/article/info:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 根据文章id获取文章信息
+      parameters:
+      - description: 文章id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: 获取单个文章信息
+swagger: "2.0"
