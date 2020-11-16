@@ -33,7 +33,7 @@ func JWT() gin.HandlerFunc {
 
 		var code int
 		code = global.SUCCESS
-		token := ctx.PostForm("token")
+		token := ctx.GetHeader("token")
 		token = strings.Trim(token, "\b")
 		if token == "" {
 			code = global.LOGIN_ERROR

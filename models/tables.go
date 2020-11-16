@@ -2,6 +2,8 @@ package models
 
 import "time"
 
+//表明组成前缀+结构名（小写）
+
 //标签包含的内容
 type Tag struct {
 	Id         int    `json:"id"`
@@ -35,4 +37,11 @@ type Auth struct {
 	Password string        `json:"password"`
 	Token    string        `json:"token"` //表中要有的字段
 	Time     time.Duration `json:"time"`
+}
+
+type Channel struct {
+	ID        int    `gorm:"primary_key" json:"id"`
+	Name      string `json:"name"`
+	Datetime  string `json:"datetime"`
+	ChannelId string `json:"channel_id"` //表中要有的字段
 }

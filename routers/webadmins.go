@@ -15,6 +15,7 @@ func initWebAdminsRouters(router *gin.Engine){
 	initSystemRouter(router)
 	initUserRouter(router)
 	initDeployRouter(router)
+	initChannelRouter(router)
 }
 
 //系统接口
@@ -46,6 +47,20 @@ func initDeployRouter(router *gin.Engine){
 		deploy.POST("/vcode/verify", api.CodeVerify)
 		deploy.GET("/set", api.SessionSet)
 		deploy.POST("/get", api.SessionGet)
+	}
+}
+
+
+
+//综合的接口
+func initChannelRouter(router *gin.Engine){
+	channel := router.Group("/webadmins/channel").Use(jwt.JWT())//验证token中间件
+	{
+		api := webadmins.NewChannel()
+		channel.POST("/list", api.List)
+		channel.POST("/modify", api.Modify)
+		channel.POST("/add", api.Add)
+		channel.POST("/del", api.Delete)
 	}
 }
 

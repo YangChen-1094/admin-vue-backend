@@ -53,3 +53,8 @@ func NewModelAuth() *ModelAuth{
 func NewModelCaptcha() *ModelCaptcha{
 	return &ModelCaptcha{}
 }
+
+func NewModelChannel() *ModelChannel{
+	return &ModelChannel{}
+}
+

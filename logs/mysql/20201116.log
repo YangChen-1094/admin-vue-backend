@@ -1,0 +1,2 @@
+[INFO][models/channel.go:75] 2020/11/16 20:05:54.464861 [channel [Add]  Add err:  0xc0011c8680]
+[INFO][models/channel.go:75] 2020/11/16 20:07:59.863600 [channel [Add]  Add err:  Error 1146: Table 'my_gin.bh_' doesn't exist]
