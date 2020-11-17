@@ -14,10 +14,6 @@ func init() {//初始化
 	models.Setup()
 }
 
-type Code struct {
-	Code string
-}
-
 func main() {
 	router := routers.InitRouter()
 	//endless.DefaultReadTimeOut = setting.ReadTimeOut
