@@ -8,7 +8,7 @@ import (
 	"my_gin/pkg/setting"
 )
 
-var db *gorm.DB
+var Db *gorm.DB
 
 type Model struct{}
 
@@ -19,22 +19,22 @@ func Setup() {
 		setting.DatabaseSetting.Password,
 		setting.DatabaseSetting.Host,
 		setting.DatabaseSetting.Name)
-	db, err = gorm.Open(setting.DatabaseSetting.Type, str) //这里必须使用 “=” 让db作为包内的变量 ，如果使用“:=”只能运用再Setup()方法内
+	Db, err = gorm.Open(setting.DatabaseSetting.Type, str) //这里必须使用 “=” 让db作为包内的变量 ，如果使用“:=”只能运用再Setup()方法内
 	if err != nil {
 		log.Fatalf("Fail to Open 'database': %v", err)
 	}
-	gorm.DefaultTableNameHandler = func(db *gorm.DB, defaultTableName string) string {
+	gorm.DefaultTableNameHandler = func(Db *gorm.DB, defaultTableName string) string {
 		return setting.DatabaseSetting.TablePrefix + defaultTableName
 	}
 
-	db.SingularTable(true) //默认情况下使用单数表
-	//db.LogMode(true)
-	db.DB().SetMaxIdleConns(10)
-	db.DB().SetMaxOpenConns(100)
+	Db.SingularTable(true) //默认情况下使用单数表
+	//Db.LogMode(true)
+	Db.DB().SetMaxIdleConns(setting.DatabaseSetting.MaxConn)  //最大的空闲连接数
+	Db.DB().SetMaxOpenConns(setting.DatabaseSetting.MaxOpen)  //最大的连接数
 }
 
 func CloseDb() {
-	defer db.Close()
+	defer Db.Close()
 }
 
 //model类

@@ -16,7 +16,7 @@ type Params struct {//定义的jwt里面存啥
 }
 
 func GenerateToken(id int, username string) (string, error) {
-	expire := time.Now().Add(3 * time.Hour)
+	expire := time.Now().Add(24 * time.Hour)
 	param := Params{
 		id,
 		username,

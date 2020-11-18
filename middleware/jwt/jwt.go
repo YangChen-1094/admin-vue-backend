@@ -39,16 +39,19 @@ func JWT() gin.HandlerFunc {
 			code = global.LOGIN_ERROR
 		} else {
 			tokenParam, err := util.ParseToken(token)
-			if err != nil { //验证token失败
+			if tokenParam == nil || err != nil { //验证token失败
 				code = global.ERROR_AUTH_CHECK_TOKEN_FAIL
+				global.JsonRet(ctx,  global.LOGIN_ERROR, "token已失效！", nil)
+				ctx.Abort()
+				return
 			} else if time.Now().Unix() > tokenParam.ExpiresAt { //token 过期
 				code = global.ERROR_AUTH_CHECK_TOKEN_TIMEOUT
 			}
+			logger.Info("user", "[Login]", ", tokenParam=",tokenParam)
 			ModelAuth := models.NewModelAuth()
 			dbToken := ModelAuth.GetDbToken(tokenParam.Id)//检查这个用户是否存在
-			logger.Info("user", "[Login]", ", token=",token)
 			if dbToken != token {
-				global.JsonRet(ctx,  global.ERROR_AUTH_CHECK_TOKEN_FAIL, "token已失效！", nil)
+				global.JsonRet(ctx,  global.LOGIN_ERROR, "token已失效！", nil)
 				ctx.Abort()
 				return
 			}

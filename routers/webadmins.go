@@ -46,6 +46,7 @@ func initChannelRouter(webGroup *gin.RouterGroup){
 		channel.POST("/modify", api.Modify)
 		channel.POST("/add", api.Add)
 		channel.POST("/del", api.Delete)
+		channel.POST("/import", api.Import)
 	}
 }
 

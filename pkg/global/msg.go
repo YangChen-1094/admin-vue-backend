@@ -27,4 +27,5 @@ func GetMsg(code int) string {
 
 const (
 	WEB_ADMINS_LOGIN_EXPIRE = 86400 * 7
+	WEB_ADMINS_MAX_UPLOAD_SIZE = 1024 * 1024 * 4
 )

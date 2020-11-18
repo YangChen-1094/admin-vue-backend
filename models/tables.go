@@ -40,8 +40,8 @@ type Auth struct {
 }
 
 type Channel struct {
-	ID        int    `gorm:"primary_key" json:"id"`
-	Name      string `json:"name"`
-	Datetime  string `json:"datetime"`
-	ChannelId string `json:"channel_id"` //表中要有的字段
+	ID        int    `json:"id"          gorm:"primary_key;column:id"`
+	Name      string `json:"name"        gorm:"column:name"`
+	Datetime  string `json:"datetime"    gorm:"column:datetime" `
+	ChannelId string `json:"channel_id"  gorm:"column:channel_id" ` //表中要有的字段
 }

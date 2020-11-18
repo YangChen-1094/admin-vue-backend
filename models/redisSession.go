@@ -95,15 +95,15 @@ func NewRedisManager() *RedisManager {
 func (rds *RedisManager) Init(addr string, options ...string) {
 	var (
 		passwd string
-		db     string
+		Db     string
 	)
 	if len(options) == 1 {
 		passwd = options[0]
 	} else if len(options) == 1 {
 		passwd = options[0]
-		db = options[1]
+		Db = options[1]
 	}
-	dbVal, err := strconv.Atoi(db)
+	dbVal, err := strconv.Atoi(Db)
 	if err != nil {
 		dbVal = 0
 	}

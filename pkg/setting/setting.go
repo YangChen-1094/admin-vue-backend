@@ -38,6 +38,8 @@ type Database struct {
 	Host string
 	Name string
 	TablePrefix string
+	MaxConn int
+	MaxOpen int
 }
 
 var AppSetting = &App{}
