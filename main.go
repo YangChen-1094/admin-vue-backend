@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-contrib/static"
 	"log"
 	"my_gin/models"
 	"my_gin/pkg/setting"
@@ -16,6 +17,12 @@ func init() {//初始化
 
 func main() {
 	router := routers.InitRouter()
+	router.Use(static.Serve("/", static.LocalFile("./dist/", false)))
+	//router.Static("./static", "/static")
+	//router.GET("/", func(context *gin.Context) {
+	//	context.HTML(http.StatusOK, "index.html", nil)
+	//	return
+	//})
 	//endless.DefaultReadTimeOut = setting.ReadTimeOut
 	//endless.DefaultWriteTimeOut = setting.WriteTimeOut
 	//endless.DefaultMaxHeaderBytes = 1 << 20 //请求头的最大字节数 2^20 即：1024 * 1024b => 1M

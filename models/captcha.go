@@ -14,6 +14,7 @@ import (
 type ModelCaptcha struct {
 }
 
+//生成验证码id及图片
 func (this *ModelCaptcha)Captcha(c *gin.Context, length ...int) {
 	l := captcha.DefaultLen
 	w, h := 120, 50
@@ -31,8 +32,25 @@ func (this *ModelCaptcha)Captcha(c *gin.Context, length ...int) {
 	session.Set("captcha", captchaId)
 	c.SetCookie("captcha", captchaId, 1200, "/", "localhost", false, false)
 	_ = session.Save()
-	_ = this.Serve(c.Writer, c.Request, captchaId, ".png", "zh", false, w, h)
+	_ = this.Serve(c.Writer, c.Request, captchaId, ".png", "zh", true, w, h)
 }
+
+
+//验证码图片
+func (this *ModelCaptcha)CaptchaImg(c *gin.Context, captchaId string){
+	_ = this.Serve(c.Writer, c.Request, captchaId, ".png", "zh", true, 120, 50)
+}
+
+//获取验证码id
+func (this *ModelCaptcha)CaptchaId(length ...int) string {
+	l := captcha.DefaultLen
+	if len(length) == 1 {
+		l = length[0]
+	}
+	captchaId := captcha.NewLen(l)
+	return captchaId
+}
+
 func (this *ModelCaptcha)CaptchaVerify(c *gin.Context, code string) bool {
 	session := sessions.Default(c)
 	captchaId := session.Get("captcha")

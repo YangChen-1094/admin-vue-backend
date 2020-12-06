@@ -23,6 +23,8 @@ func JWT() gin.HandlerFunc {
 		var aNotCheckUrl = [...]string{
 			"/v1/auth/getToken",
 			"/webadmins/user/vcode",
+			"/webadmins/user/captchaId",
+			"/webadmins/user/codeImg",
 			"/webadmins/user/login",
 		}
 

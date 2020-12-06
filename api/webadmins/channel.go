@@ -21,7 +21,9 @@ func (this *channel) List(ctx *gin.Context){
 	modelChannel := models.NewModelChannel()
 	list := modelChannel.GetChannelList(1, 30)
 	data := make(map[string]interface{})
+	redisPool := models.RedisMgr.RdsClient.PoolStats()
 	data["list"] = list
+	data["pool"] = redisPool
 	global.JsonRet(ctx, global.SUCCESS, "", data)
 	return
 }

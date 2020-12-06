@@ -9,6 +9,7 @@ require (
 	github.com/dchest/captcha v0.0.0-20200903113550-03f5f0333e1f
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/sessions v0.0.3
+	github.com/gin-contrib/static v0.0.0-20200916080430-d45d9a37d28e
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-ini/ini v1.58.0
 	github.com/go-openapi/spec v0.19.9 // indirect

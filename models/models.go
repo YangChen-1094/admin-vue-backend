@@ -31,6 +31,9 @@ func Setup() {
 	//Db.LogMode(true)
 	Db.DB().SetMaxIdleConns(setting.DatabaseSetting.MaxConn)  //最大的空闲连接数
 	Db.DB().SetMaxOpenConns(setting.DatabaseSetting.MaxOpen)  //最大的连接数
+
+	RedisMgr = NewRedisManager()
+	RedisMgr.Init("127.0.0.1:6379")
 }
 
 func CloseDb() {

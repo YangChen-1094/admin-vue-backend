@@ -17,8 +17,7 @@ type Code struct {
 }
 
 func LoginSessionMiddleware() gin.HandlerFunc {
-	models.RedisMgr = models.NewRedisManager()
-	models.RedisMgr.Init("127.0.0.1:6379")
+
 	return func(ctx *gin.Context) {
 		sessionId, err := ctx.Cookie(SessionIdName)
 		var sessionData models.MemSessionData

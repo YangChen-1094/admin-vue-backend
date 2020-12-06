@@ -67,7 +67,7 @@ func (memSession *MemSessionData) Save() {
 		logger.Info("redisSession", "[Save] redis 序列化sessiondata失败")
 		return
 	}
-	RedisMgr.rdsClient.Set(key, value, time.Duration(global.WEB_ADMINS_LOGIN_EXPIRE)*time.Second)
+	RedisMgr.RdsClient.Set(key, value, time.Duration(global.WEB_ADMINS_LOGIN_EXPIRE)*time.Second)
 }
 
 func (memSession *MemSessionData) Del(key string) {
@@ -79,7 +79,7 @@ func (memSession *MemSessionData) Del(key string) {
 type RedisManager struct {
 	SessionData map[string]MemSessionData
 	Lock        sync.RWMutex
-	rdsClient   *redis.Client
+	RdsClient   *redis.Client
 }
 
 var (
@@ -113,8 +113,8 @@ func (rds *RedisManager) Init(addr string, options ...string) {
 		Password: passwd,
 		DB:       dbVal,
 	}
-	rds.rdsClient = redis.NewClient(param)
-	_, err = rds.rdsClient.Ping().Result()
+	rds.RdsClient = redis.NewClient(param)
+	_, err = rds.RdsClient.Ping().Result()
 	if err != nil {
 		logger.Info("redisSession", "[Init] 初始化redis失败")
 		panic(err)
@@ -125,7 +125,7 @@ func (rds *RedisManager) Init(addr string, options ...string) {
 func (rds *RedisManager) LoadRedisData(sessionId string) (err error) {
 	modelKey := NewRedisKey()
 	key := modelKey.AdminSessionKey(sessionId)
-	val, err := rds.rdsClient.Get(key).Result()
+	val, err := rds.RdsClient.Get(key).Result()
 	if err != nil {
 		return
 	}

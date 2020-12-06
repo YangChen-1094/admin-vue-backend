@@ -30,6 +30,8 @@ func initUserRouter(webGroup *gin.RouterGroup){
 	user := webGroup.Group("/user")//webadmins 下的user路由组
 	{
 		api := webadmins.NewUser()
+		user.POST("/captchaId", api.CaptchaId)
+		user.GET("/codeImg", api.CodeImg)
 		user.GET("/vcode", api.Code)
 		user.POST("/login", api.Login)
 		user.POST("/logout", api.Logout)

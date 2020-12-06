@@ -1,6 +1,8 @@
 package webadmins
 
 import (
+	"fmt"
+	"github.com/dchest/captcha"
 	"github.com/gin-gonic/gin"
 	"my_gin/models"
 	"my_gin/pkg/global"
@@ -22,16 +24,40 @@ func (this *User) Code(ctx *gin.Context){
 	modelCap.Captcha(ctx, 4)
 	return
 }
+
+func (this *User) CodeImg(ctx *gin.Context){
+	captchaId := ctx.Query("captchaId")
+	modelCap := models.NewModelCaptcha()
+	modelCap.CaptchaImg(ctx, captchaId)
+}
+
+func (this *User) CaptchaId(ctx *gin.Context){
+	modelCap := models.NewModelCaptcha()
+	captchaId := modelCap.CaptchaId(4)
+	data := make(map[string]interface{})
+	data["captchaId"] = captchaId
+	fmt.Println(captchaId)
+	global.JsonRet(ctx, global.SUCCESS, "success", data)
+	return
+}
+
 func (this *User) Login(ctx *gin.Context){
 	data := make(map[string]interface{})
 	logger.Info("GetAuth", data)
-	modelCap := models.NewModelCaptcha()
+	//modelCap := models.NewModelCaptcha()
 	code := ctx.PostForm("vcode")
-	check := modelCap.CaptchaVerify(ctx, code)
+	captchaId := ctx.PostForm("captchaId")
+	check := captcha.VerifyString(captchaId, code)
+	fmt.Println(captchaId, code, check)
 	if !check {
 		global.JsonRet(ctx, 401, "验证码错误", data)
 		return
 	}
+	//check := modelCap.CaptchaVerify(ctx, code)
+	//if !check {
+	//	global.JsonRet(ctx, 401, "验证码错误", data)
+	//	return
+	//}
 
 	//不使用session
 	//sessionData, ok := ctx.Get(session.SessionDataName)
