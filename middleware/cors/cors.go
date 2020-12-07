@@ -1,6 +1,7 @@
 package cors
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"my_gin/pkg/setting"
 )
@@ -13,6 +14,7 @@ func Cors() gin.HandlerFunc {
 		c.Header("Access-Control-Allow-Headers", "Content-Type,AccessToken,X-CSRF-Token, Authorization, Token")
 		c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, PATCH, DELETE")
 		c.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type")
+		fmt.Println("CorsUrl:", setting.ServerSetting.CorsUrl)
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(204)
 			return
