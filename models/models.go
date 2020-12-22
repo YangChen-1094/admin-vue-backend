@@ -61,3 +61,6 @@ func NewModelChannel() *ModelChannel{
 	return &ModelChannel{}
 }
 
+func NewModelCron()*ModelCron{
+	return &ModelCron{}
+}

@@ -16,6 +16,7 @@ type App struct {
 	ImageSavePath string
 	ImageMaxSize	int
 	ImageAllowExts	[]string
+	ExportPath string
 	LogSavePath string
 	LogSaveName string
 	LogFileExt  string
@@ -41,9 +42,14 @@ type Database struct {
 	MaxConn int
 	MaxOpen int
 }
+type Grpc struct {
+	Ip string
+	Port int
+}
 
 var AppSetting = &App{}
 var ServerSetting = &Server{}
+var GrpcSetting = &Grpc{}
 var DatabaseSetting = &Database{}
 var Cfg *ini.File
 
@@ -67,6 +73,11 @@ func Setup(){
 	}
 	ServerSetting.WriteTimeOut = ServerSetting.WriteTimeOut * time.Second
 	ServerSetting.ReadTimeOut = ServerSetting.ReadTimeOut * time.Second
+
+	err = Cfg.Section("grpcConfig").MapTo(GrpcSetting)
+	if err != nil {
+		log.Fatalf("MapTo 'GrpcSetting' Failed, err: %v", err)
+	}
 
 	err = Cfg.Section("database").MapTo(DatabaseSetting)
 	if err != nil {

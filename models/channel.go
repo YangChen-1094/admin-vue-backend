@@ -23,7 +23,6 @@ func (this *ModelChannel) GetChannelList(page int, size int) (chs []Channel) {//
 	offset := (page - 1) * size
 	Db.LogMode(true)
 	Db.Limit(size).Offset(offset).Find(&chs)
-	fmt.Println(setting.DatabaseSetting)
 	return
 }
 
@@ -104,4 +103,10 @@ func (this *ModelChannel) BatchAdd(aFields []map[string]string) (err error) {
 	sql := util.GetBranchInsertSql(aData, setting.DatabaseSetting.TablePrefix + "channel")
 	err = Db.Raw(sql).Scan(&insert).Error
 	return err
+}
+
+func (this *ModelChannel) GetAllChannel() (chs []Channel) {//channel表
+	Db.LogMode(true)
+	Db.Find(&chs)
+	return
 }

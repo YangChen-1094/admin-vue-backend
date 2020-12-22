@@ -7,8 +7,10 @@ import (
 	"github.com/unknwon/com"
 	"io"
 	"my_gin/models"
+	"my_gin/pkg/file"
 	"my_gin/pkg/global"
 	"my_gin/pkg/util"
+	"strconv"
 )
 
 type channel struct {
@@ -122,4 +124,32 @@ func (this *channel) Import(ctx *gin.Context){
 	return
 }
 
+//导出所有的渠道信息
+func (this *channel) Export(ctx *gin.Context){
+	data := make(map[string]interface{})
+	modelChannel := models.NewModelChannel()
 
+	channels := modelChannel.GetAllChannel()
+
+	var csvData [][]string
+	//csvData := make([][]string, len(channels))//先确定多少数量
+	i := 0
+	for _, items := range channels{
+		tmp := make([]string, 4)
+		tmp[0] = strconv.Itoa(items.ID)
+		tmp[1] = items.Name
+		tmp[2] = items.ChannelId
+		tmp[3] = items.Datetime
+		//csvData[i] = tmp
+		csvData = append(csvData, tmp)//最佳数组
+		i++
+	}
+	data["allList"] = csvData
+	err := file.ExportToCsv("channel.csv", csvData)
+	if err != nil {
+		global.JsonRet(ctx, global.ERROR, "", data)
+		return
+	}
+	global.JsonRet(ctx, global.SUCCESS, "", data)
+	return
+}

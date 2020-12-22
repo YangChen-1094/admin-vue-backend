@@ -48,7 +48,6 @@ func (this *User) Login(ctx *gin.Context){
 	code := ctx.PostForm("vcode")
 	captchaId := ctx.PostForm("captchaId")
 	check := captcha.VerifyString(captchaId, code)
-	fmt.Println(captchaId, code, check)
 	if !check {
 		global.JsonRet(ctx, 401, "验证码错误", data)
 		return

@@ -5,6 +5,7 @@ import (
 	"github.com/gin-contrib/static"
 	"log"
 	"my_gin/models"
+	modelGrpc "my_gin/models/grpc"
 	"my_gin/pkg/setting"
 	"my_gin/routers"
 	"net/http"
@@ -32,6 +33,7 @@ func main() {
 	//server.BeforeBegin = func(add string) {
 	//	log.Printf("Actual pid is %d", syscall.Getpid())//启动时输出pid
 	//}
+	modelGrpc.Register()
 	server := &http.Server{
 		Addr:           fmt.Sprintf("%s:%d", setting.ServerSetting.HttpIp,setting.ServerSetting.HttpPort),
 		Handler:        router,

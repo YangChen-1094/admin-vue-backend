@@ -1,0 +1,23 @@
+syntax = "proto3";
+option go_package = "./;proto";
+//package proto;
+
+message StringMessage{
+	repeated StringSingle ss = 1;
+}
+
+message StringSingle{
+	string id = 1;
+	string name = 2;
+}
+
+message Empty{
+	string name = 1;
+}
+
+service MaxSize{
+	rpc One(Empty) returns (StringSingle){}
+	rpc ClientStream(stream Empty) returns (StringMessage){}
+	rpc ServerStream(Empty) returns (stream StringMessage){}
+	rpc DoubleStream(stream Empty) returns (stream StringMessage){}
+}

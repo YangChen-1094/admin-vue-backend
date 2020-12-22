@@ -1,8 +1,11 @@
 package file
 
 import (
+	"encoding/csv"
+	"fmt"
 	"io/ioutil"
 	"mime/multipart"
+	"my_gin/pkg/setting"
 	"os"
 	"path"
 )
@@ -56,5 +59,30 @@ func Open(fileName string, flag int, perm os.FileMode)(*os.File, error){
 	return f, nil
 }
 
+func GetExportPath() string{
+	return fmt.Sprintf("%s", setting.AppSetting.ExportPath)
+}
 
+//导出到csv
+func ExportToCsv(fileName string, data [][]string) error {
+	exportPath := GetExportPath()
+	if exportPath == ""{
+		return fmt.Errorf("导出目录名错误")
+	}
+	err := IsNotExistMkDir(exportPath)
+	if err != nil {
+		return nil
+	}
+	f, err := os.Create(exportPath + fileName)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	f.WriteString("\xEF\xBB\xBF")
+
+	w := csv.NewWriter(f)
+	w.WriteAll(data)
+	return nil
+}
 
