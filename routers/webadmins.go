@@ -20,6 +20,7 @@ func initWebAdminsRouters(router *gin.Engine){
 		initChannelRouter(webGroup)
 		initDeployRouter(webGroup)
 		initSystemRouter(webGroup)
+		iniItemRouter(webGroup)
 	}
 }
 
@@ -50,6 +51,17 @@ func initChannelRouter(webGroup *gin.RouterGroup){
 		channel.POST("/del", api.Delete)
 		channel.POST("/import", api.Import)
 		channel.POST("/export", api.Export)
+	}
+}
+
+//道具的接口
+func iniItemRouter(webGroup *gin.RouterGroup){
+	channel := webGroup.Group("/item")//webadmins 下的channel路由组
+	{
+		api := webadmins.NewItem()
+		channel.POST("/list", api.List)
+		channel.POST("/modify", api.Modify)
+		channel.POST("/setRedis", api.SetRedis)
 	}
 }
 

@@ -21,11 +21,12 @@ func NewChannel() *channel{
 
 func (this *channel) List(ctx *gin.Context){
 	modelChannel := models.NewModelChannel()
-	list := modelChannel.GetChannelList(1, 30)
+	size := com.StrTo(ctx.DefaultPostForm("size", "20")).MustInt()
+	page := com.StrTo(ctx.DefaultPostForm("page", "1")).MustInt()
+	list := modelChannel.GetChannelList(page, size)
 	data := make(map[string]interface{})
-	redisPool := models.RedisMgr.RdsClient.PoolStats()
 	data["list"] = list
-	data["pool"] = redisPool
+	data["count"] = modelChannel.GetChannelCount()
 	global.JsonRet(ctx, global.SUCCESS, "", data)
 	return
 }
@@ -36,7 +37,7 @@ func (this *channel) Modify(ctx *gin.Context){
 	modelChannel := models.NewModelChannel()
 	id := com.StrTo(ctx.PostForm("id")).MustInt()
 	param["name"] = com.StrTo(ctx.PostForm("name")).String()
-	param["channel_id"] = com.StrTo(ctx.PostForm("channel_id")).String()
+	param["channelId"] = com.StrTo(ctx.PostForm("channelId")).String()
 	update := modelChannel.Modify(id, param)
 	if update {
 		global.JsonRet(ctx, global.SUCCESS, "", data)
@@ -65,7 +66,7 @@ func (this *channel) Add(ctx *gin.Context){
 	param := make(map[string]interface{})
 	modelChannel := models.NewModelChannel()
 	param["name"] = com.StrTo(ctx.PostForm("name")).String()
-	param["channel_id"] = com.StrTo(ctx.PostForm("channel_id")).String()
+	param["channelId"] = com.StrTo(ctx.PostForm("channelId")).String()
 
 	add := modelChannel.Add(param)
 	if add {
@@ -111,7 +112,7 @@ func (this *channel) Import(ctx *gin.Context){
 			aCh[i], _ = util.ConvertToString(aCh[i], "GBK", "UTF-8")
 		}
 		one := make(map[string]string)
-		one["channel_id"] = aCh[0]
+		one["channelId"] = aCh[0]
 		one["name"] = aCh[1]
 		aField = append(aField, one)
 	}

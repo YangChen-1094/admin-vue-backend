@@ -43,5 +43,25 @@ type Channel struct {
 	ID        int    `json:"id"          gorm:"primary_key;column:id"`
 	Name      string `json:"name"        gorm:"column:name"`
 	Datetime  string `json:"datetime"    gorm:"column:datetime" `
-	ChannelId string `json:"channel_id"  gorm:"column:channel_id" ` //表中要有的字段
+	ChannelId string `json:"channelId"   gorm:"column:channelId" ` //表中要有的字段
+}
+
+type ItemConfig struct {
+	Type       int `json:"type"             gorm:"column:type" `
+	ItemId     int    `json:"itemid"        gorm:"primary_key;column:itemid"`
+	Itemname   string `json:"itemname"      gorm:"column:itemname" `
+	ProductID  string `json:"productID"     gorm:"column:productID"`
+	Descr      string `json:"descr"         gorm:"column:descr" `
+	ImgUrl     string `json:"imgUrl"        gorm:"column:imgUrl" ` //表中要有的字段
+	ButtonUrl  string `json:"buttonUrl"     gorm:"column:buttonUrl" `
+	BannerUrl  string `json:"bannerUrl"     gorm:"column:bannerUrl" `
+	ButtonDesc string `json:"buttonDesc"    gorm:"column:buttonDesc" `
+	Usetype    string `json:"usetype"       gorm:"column:usetype" `
+	Price      string `json:"price"         gorm:"column:price" `
+}
+
+type ItemType struct {
+	Id       int    `json:"id"              gorm:"primary_key;column:id"`
+	Itemtype string `json:"itemtype"        gorm:"column:itemtype"`
+	Typename string `json:"typename"        gorm:"column:typename" `
 }
