@@ -3,8 +3,8 @@ package logger
 import (
 	"fmt"
 	"log"
-	"my_gin/pkg/file"
 	"my_gin/pkg/setting"
+	"my_gin/pkg/util"
 	"os"
 	"runtime"
 	"strings"
@@ -72,6 +72,7 @@ func getLogPath() string{
 
 //打开日志
 func openLogFile(fileName string)(*os.File, error){
+	file := util.NewFile()
 	dir, err:= os.Getwd()//运行目录
 	if err != nil {
 		return nil, fmt.Errorf("openLogFile() in os.Getwd err:%v", err)

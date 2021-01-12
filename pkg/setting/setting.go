@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/go-ini/ini"
+	"github.com/go-redis/redis"
 	"log"
 	"time"
 )
@@ -51,6 +52,9 @@ var AppSetting = &App{}
 var ServerSetting = &Server{}
 var GrpcSetting = &Grpc{}
 var DatabaseSetting = &Database{}
+var StoreConfig = &StoreCfg{
+	RedisClient: make(map[string][]*redis.Client),
+}	//db列表配置
 var Cfg *ini.File
 
 func Setup(){
@@ -83,4 +87,12 @@ func Setup(){
 	if err != nil {
 		log.Fatalf("MapTo 'DatabaseSetting' Failed, err: %v", err)
 	}
+	err = StoreConfig.LoadRedis(*runEnv)
+	if err != nil {
+		log.Fatalf("loading 'storeConfig.LoadRedis' Failed, err: %v", err)
+	}
+}
+
+func GetExportPath() string{
+	return fmt.Sprintf("%s", AppSetting.ExportPath)
 }

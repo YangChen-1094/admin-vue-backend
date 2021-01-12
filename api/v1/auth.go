@@ -6,6 +6,7 @@ import (
 	"my_gin/models"
 	"my_gin/pkg/global"
 	"my_gin/pkg/logger"
+	"my_gin/pkg/setting"
 	"my_gin/pkg/util"
 )
 
@@ -42,8 +43,8 @@ func (this *ApiAuth) GetAuth(ctx *gin.Context){
 		global.JsonRet(ctx, global.ERROR, "用户不存在", nil)
 		return
 	}
-
-	token, err := util.GenerateToken(id, username)//生成token
+	var jwtSecret = []byte(setting.AppSetting.JwtSecret)
+	token, err := util.GenerateToken(id, username, jwtSecret)//生成token
 	if err != nil {
 		global.JsonRet(ctx, global.ERROR_AUTH_TOKEN, "", nil)
 		return

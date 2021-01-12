@@ -7,8 +7,8 @@ import (
 	"github.com/unknwon/com"
 	"io"
 	"my_gin/models"
-	"my_gin/pkg/file"
 	"my_gin/pkg/global"
+	"my_gin/pkg/setting"
 	"my_gin/pkg/util"
 	"strconv"
 )
@@ -146,7 +146,9 @@ func (this *channel) Export(ctx *gin.Context){
 		i++
 	}
 	data["allList"] = csvData
-	err := file.ExportToCsv("channel.csv", csvData)
+	file := util.NewFile()
+	path := setting.GetExportPath()
+	err := file.ExportToCsv(path, "channel.csv", csvData)
 	if err != nil {
 		global.JsonRet(ctx, global.ERROR, "", data)
 		return

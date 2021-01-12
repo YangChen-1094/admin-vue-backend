@@ -5,6 +5,7 @@ import (
 	"my_gin/models"
 	"my_gin/pkg/file"
 	"my_gin/pkg/setting"
+	"my_gin/pkg/util"
 )
 func init() {//初始化
 	setting.Setup()
@@ -17,8 +18,9 @@ func main(){
 		{"2", "test2", "我时一个安抚"},
 		{"3", "test3", "让我发"},
 	}
-
-	err := file.ExportToCsv("test.csv", data)
+	testFile := util.NewFile()
+	path := setting.GetExportPath()
+	_ = testFile.ExportToCsv(path, "test.csv", data)
 	crontab := cron.New()
 
 

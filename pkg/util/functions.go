@@ -1,16 +1,14 @@
 package util
 
 import (
-	"crypto/md5"
-	"crypto/sha1"
-	"encoding/hex"
 	"errors"
 	"fmt"
 	"github.com/axgle/mahonia"
-	"hash/crc32"
 	"reflect"
 	"strings"
 )
+
+//常用的方法【PS:不能引入项目的其他包，以免有冲突】
 
 /**
  * @brief  把当前字符串按照指定方式进行编码
@@ -181,21 +179,3 @@ func GetColumnName(jsonName string) string {
 	return ""
 }
 
-
-func EncryptCRC32(str string) uint32{
-	return crc32.ChecksumIEEE([]byte(str))
-}
-
-// 生成md5
-func EncryptMD5(str string) string {
-	c := md5.New()
-	c.Write([]byte(str))
-	return hex.EncodeToString(c.Sum(nil))
-}
-
-//生成sha1
-func EncryptSHA1(str string) string{
-	c:=sha1.New()
-	c.Write([]byte(str))
-	return hex.EncodeToString(c.Sum(nil))
-}

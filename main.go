@@ -34,6 +34,9 @@ func main() {
 	//	log.Printf("Actual pid is %d", syscall.Getpid())//启动时输出pid
 	//}
 	modelGrpc.Register()
+	redisGame := setting.StoreConfig.GetRedisClient("1", "session_slave")
+	val, _ := redisGame.Get("test").Result()
+	fmt.Println("redis test:", val)
 	server := &http.Server{
 		Addr:           fmt.Sprintf("%s:%d", setting.ServerSetting.HttpIp,setting.ServerSetting.HttpPort),
 		Handler:        router,

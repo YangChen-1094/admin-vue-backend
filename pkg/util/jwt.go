@@ -2,11 +2,8 @@ package util
 
 import (
 	"github.com/dgrijalva/jwt-go"
-	"my_gin/pkg/setting"
 	"time"
 )
-
-var jwtSecret = []byte(setting.AppSetting.JwtSecret)
 
 type Params struct {//定义的jwt里面存啥
 	Id       int    `json:"id"`
@@ -15,7 +12,7 @@ type Params struct {//定义的jwt里面存啥
 	jwt.StandardClaims
 }
 
-func GenerateToken(id int, username string) (string, error) {
+func GenerateToken(id int, username string, jwtSecret []byte) (string, error) {
 	expire := time.Now().Add(24 * time.Hour)
 	param := Params{
 		id,
@@ -30,7 +27,7 @@ func GenerateToken(id int, username string) (string, error) {
 	return token, err
 }
 
-func ParseToken(token string) (*Params, error) {
+func ParseToken(token string, jwtSecret []byte) (*Params, error) {
 	tokenParam, err := jwt.ParseWithClaims(token, &Params{}, func(token *jwt.Token) (interface{}, error) {
 		return jwtSecret, nil
 	})

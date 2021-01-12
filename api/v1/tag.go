@@ -34,7 +34,7 @@ func (this *ApiTag)GetTags(ctx *gin.Context) {
 	tagModel := models.NewModelTag()
 	where["state"] = state
 
-	data["list"] = tagModel.GetTagsList(util.GetPage(ctx), setting.AppSetting.PageSize, where)
+	data["list"] = tagModel.GetTagsList(util.GetPage(ctx, setting.AppSetting.PageSize), setting.AppSetting.PageSize, where)
 	data["total"] = tagModel.GetTagsCount(where)
 
 	global.JsonRet(ctx, 200, "", data)

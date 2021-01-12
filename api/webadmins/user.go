@@ -7,6 +7,7 @@ import (
 	"my_gin/models"
 	"my_gin/pkg/global"
 	"my_gin/pkg/logger"
+	"my_gin/pkg/setting"
 	"my_gin/pkg/util"
 )
 
@@ -80,8 +81,9 @@ func (this *User) Login(ctx *gin.Context){
 		return
 	}
 
+	var jwtSecret = []byte(setting.AppSetting.JwtSecret)
 	//使用jwt 作为区分每个用户的token
-	token, err := util.GenerateToken(id, username)//生成token
+	token, err := util.GenerateToken(id, username, jwtSecret)//生成token
 	if err != nil {
 		global.JsonRet(ctx, global.ERROR, "jwt token生成失败", nil)
 		return

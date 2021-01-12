@@ -4,7 +4,12 @@ import (
 	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
+	"crypto/md5"
+	"crypto/sha1"
 	"encoding/base64"
+	"encoding/hex"
+	"hash/crc32"
+	"hash/fnv"
 )
 const AesKey = "1234567890123456"
 
@@ -57,4 +62,34 @@ func PKCS7UnPadding(origData []byte) []byte {
 	length := len(origData)
 	unpadding := int(origData[length-1])
 	return origData[:(length - unpadding)]
+}
+
+//生成crc32加密字符串
+func EncryptCRC32(str string) uint32{
+	return crc32.ChecksumIEEE([]byte(str))
+}
+
+
+func EncryptHashOld(s string) uint32 {
+	h := fnv.New32a()
+	_, err := h.Write([]byte(s))
+	if err != nil {
+		return 0
+	}
+	return h.Sum32()
+}
+
+
+// 生成md5
+func EncryptMD5(str string) string {
+	c := md5.New()
+	c.Write([]byte(str))
+	return hex.EncodeToString(c.Sum(nil))
+}
+
+//生成sha1
+func EncryptSHA1(str string) string{
+	c:=sha1.New()
+	c.Write([]byte(str))
+	return hex.EncodeToString(c.Sum(nil))
 }

@@ -3,15 +3,14 @@ package util
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/unknwon/com"
-	"my_gin/pkg/setting"
 	"reflect"
 )
 
-func GetPage(c *gin.Context) int{
+func GetPage(c *gin.Context, pageSize int) int{
 	ret :=0
 	page, _ := com.StrTo(c.Query("page")).Int()
 	if page > 0 {
-		ret = (page - 1) * setting.AppSetting.PageSize
+		ret = (page - 1) * pageSize
 	}
 	return ret
 }

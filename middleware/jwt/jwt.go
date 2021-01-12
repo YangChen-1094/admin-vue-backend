@@ -5,6 +5,7 @@ import (
 	"my_gin/models"
 	"my_gin/pkg/global"
 	"my_gin/pkg/logger"
+	"my_gin/pkg/setting"
 	"my_gin/pkg/util"
 	"strings"
 	"time"
@@ -40,7 +41,8 @@ func JWT() gin.HandlerFunc {
 		if token == "" {
 			code = global.LOGIN_ERROR
 		} else {
-			tokenParam, err := util.ParseToken(token)
+			var jwtSecret = []byte(setting.AppSetting.JwtSecret)
+			tokenParam, err := util.ParseToken(token, jwtSecret)
 			if tokenParam == nil || err != nil { //验证token失败
 				code = global.ERROR_AUTH_CHECK_TOKEN_FAIL
 				global.JsonRet(ctx,  global.LOGIN_ERROR, "token已失效！", nil)
