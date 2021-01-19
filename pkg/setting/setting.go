@@ -54,7 +54,12 @@ type Config struct {
 	Grpc *GrpcConfig
 	Database *DatabaseConfig
 }
-var DeployConfig = &Config{}
+var DeployConfig = &Config{
+	App:&AppConfig{},
+	Server: &ServerConfig{},
+	Grpc: &GrpcConfig{},
+	Database: &DatabaseConfig{},
+}
 
 //app.ini配置文件 变量
 var Cfg *ini.File
@@ -71,7 +76,7 @@ var Mysql = &MysqlCfg{
 
 func Setup(){
 	var err error
-	initDeploy()
+	//initDeploy()
 	runEnv := flag.String("env", "dev", "-env dev|pre|prod")//返回地址
 	flag.Parse()
 	appFile := fmt.Sprintf("conf/%s/app.ini", *runEnv)
