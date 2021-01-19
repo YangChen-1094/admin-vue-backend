@@ -16,7 +16,7 @@ func init() {//初始化
 }
 
 func main(){
-	conn, err := grpc.Dial(fmt.Sprintf("%s:%d", setting.GrpcSetting.Ip, setting.GrpcSetting.Port), grpc.WithInsecure())
+	conn, err := grpc.Dial(fmt.Sprintf("%s:%d", setting.DeployConfig.Grpc.Ip, setting.DeployConfig.Grpc.Port), grpc.WithInsecure())
 	log.SetFlags(log.Llongfile | log.LstdFlags | log.Lmicroseconds)
 	if err != nil {
 		log.Fatalf("fail to dial: %v", err)

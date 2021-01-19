@@ -5,7 +5,9 @@ go 1.14
 require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/astaxie/beego v1.12.2
+	github.com/aws/aws-sdk-go v1.36.26
 	github.com/axgle/mahonia v0.0.0-20180208002826-3358181d7394
+	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/dchest/captcha v0.0.0-20200903113550-03f5f0333e1f
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/sessions v0.0.3
@@ -17,7 +19,9 @@ require (
 	github.com/go-playground/validator/v10 v10.3.0 // indirect
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/go-sql-driver/mysql v1.5.0
+	github.com/gofrs/uuid v4.0.0+incompatible // indirect
 	github.com/golang/protobuf v1.4.2
+	github.com/guregu/dynamo v1.10.2
 	github.com/jinzhu/gorm v1.9.16
 	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/mojocn/base64Captcha v1.3.1 // indirect
@@ -28,8 +32,7 @@ require (
 	github.com/swaggo/swag v1.6.7
 	github.com/unknwon/com v1.0.1
 	golang.org/x/image v0.0.0-20200927104501-e162460cd6b5 // indirect
-	golang.org/x/net v0.0.0-20200813134508-3edf25e44fcc
-	golang.org/x/sys v0.0.0-20200820212457-1fb795427249 // indirect
+	golang.org/x/net v0.0.0-20201224014010-6772e930b67b
 	golang.org/x/tools v0.0.0-20200820180210-c8f393745106 // indirect
 	google.golang.org/grpc v1.27.0
 	google.golang.org/protobuf v1.25.0

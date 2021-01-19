@@ -17,7 +17,7 @@ func InitRouter() *gin.Engine{
 	router.Use(cors.Cors())//跨域
 	router.Use(session.Session("mhjy"))
 	//router.Use(session.LoginSessionMiddleware())//登录 不使用session
-	gin.SetMode(setting.ServerSetting.RunMode)
+	gin.SetMode(setting.DeployConfig.Server.RunMode)
 	router.GET("/Swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	//router.Use(jwt.JWT())//验证token中间件

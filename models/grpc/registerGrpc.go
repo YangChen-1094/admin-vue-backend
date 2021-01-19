@@ -20,7 +20,7 @@ func Register(){
 	proto.RegisterMaxSizeServer(grpcServer, &MaxSize{}) //server端实现pb协议中MaxSize grpc的方法
 
 	go func() {//必须以协程方式启动，不然gin框架启动不了
-		grpcCon, _ := net.Listen("tcp", fmt.Sprintf("%s:%d", setting.GrpcSetting.Ip, setting.GrpcSetting.Port))
+		grpcCon, _ := net.Listen("tcp", fmt.Sprintf("%s:%d", setting.DeployConfig.Grpc.Ip, setting.DeployConfig.Grpc.Port))
 		_ = grpcServer.Serve(grpcCon)
 		defer grpcCon.Close()
 	}()

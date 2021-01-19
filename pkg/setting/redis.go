@@ -8,21 +8,20 @@ import (
 	"my_gin/pkg/util"
 )
 
-type RedisCfg struct {
+type RedisConfig struct {
 	Addr     string `json:"addr"`
 	Password string `json:"password"`
 	Db       int    `json:"db"`
 	PoolSize int    `json:"pool_size"`
 }
 
-type StoreCfg struct {
+type RedisCfg struct {
 	RedisInit   bool
 	RedisClient map[string][]*redis.Client
-	RedisList   map[string][]*RedisCfg `json:"redis"`
+	RedisList   map[string][]*RedisConfig `json:"redis"`
 }
-
 //加载store.json配置
-func (this *StoreCfg) LoadRedis(env string) error {
+func (this *RedisCfg) LoadRedisCfg(env string) error {
 	file := util.NewFile()
 	storeFile := fmt.Sprintf("conf/%s/store.json", env)
 	jsonStr, _ := file.GetContentString(storeFile)
@@ -40,7 +39,7 @@ func (this *StoreCfg) LoadRedis(env string) error {
 }
 
 //初始化redis列表
-func (this *StoreCfg) InitRedisList() error {
+func (this *RedisCfg) InitRedisList() error {
 	if this.RedisInit { //已经初始化过了
 		return nil
 	}
@@ -71,7 +70,7 @@ func (this *StoreCfg) InitRedisList() error {
 }
 
 //获取redis列表中的redis客户端
-func (this *StoreCfg)GetRedisClient(shareKey, name string) *redis.Client {
+func (this *RedisCfg)GetRedisClient(shareKey, name string) *redis.Client {
 	if !this.RedisInit {
 		if err := this.InitRedisList(); err != nil{
 			return nil
@@ -82,7 +81,6 @@ func (this *StoreCfg)GetRedisClient(shareKey, name string) *redis.Client {
 		if length > 0 {//有指定name的实例
 			id := util.EncryptCRC32(shareKey)
 			index := id % uint32(length)
-			fmt.Println("GetRedisClient index:", index)
 			return this.RedisClient[name][index]
 		}
 	}

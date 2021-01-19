@@ -67,7 +67,7 @@ func setPrefix(thisLog *log.Logger,level Level){
 
 //log日志目录的相对路径 如： logs/
 func getLogPath() string{
-	return fmt.Sprintf("%s", setting.AppSetting.LogSavePath)
+	return fmt.Sprintf("%s", setting.DeployConfig.App.LogSavePath)
 }
 
 //打开日志
@@ -78,7 +78,7 @@ func openLogFile(fileName string)(*os.File, error){
 		return nil, fmt.Errorf("openLogFile() in os.Getwd err:%v", err)
 	}
 	logsPath := getLogPath() // ...logs/
-	Ymd := time.Now().Format(setting.AppSetting.LogTimeFormat)
+	Ymd := time.Now().Format(setting.DeployConfig.App.LogTimeFormat)
 	logsPath = dir + "/" + logsPath + fileName + "/" //logs/logName/20200824.log
 
 	err = file.IsNotExistMkDir(logsPath)
@@ -87,7 +87,7 @@ func openLogFile(fileName string)(*os.File, error){
 	}
 
 	finalName := logsPath + Ymd //logs/20060102/logName.log
-	f, err := file.Open( finalName + "." + setting.AppSetting.LogFileExt, os.O_APPEND | os.O_CREATE | os.O_WRONLY, 0664)
+	f, err := file.Open( finalName + "." + setting.DeployConfig.App.LogFileExt, os.O_APPEND | os.O_CREATE | os.O_WRONLY, 0664)
 	if err != nil {
 		return nil, fmt.Errorf("openLogFile() file.Open err:%v", err)
 	}

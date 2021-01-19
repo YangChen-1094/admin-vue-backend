@@ -132,7 +132,7 @@ func (this *ModelChannel) BatchAdd(aFields []map[string]string) (err error) {
 	sql:=""
 	if len(aInsert) > 0 {
 		var insert []Channel
-		sql := util.GetBranchInsertSql(aInsert, setting.DatabaseSetting.TablePrefix + "channel")
+		sql := util.GetBranchInsertSql(aInsert, setting.DeployConfig.Database.TablePrefix + "channel")
 		err = Db.Raw(sql).Scan(&insert).Error
 	}
 
@@ -141,7 +141,7 @@ func (this *ModelChannel) BatchAdd(aFields []map[string]string) (err error) {
 		notUpdate := []string{
 			"id", "channelId",
 		}
-		sql = util.GetBranchUpdateSql(aUpdate, setting.DatabaseSetting.TablePrefix + "channel", keys, notUpdate, "")
+		sql = util.GetBranchUpdateSql(aUpdate, setting.DeployConfig.Database.TablePrefix + "channel", keys, notUpdate, "")
 		err = Db.Raw(sql).Scan(&update).Error
 	}
 	return err

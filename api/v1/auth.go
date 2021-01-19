@@ -43,7 +43,7 @@ func (this *ApiAuth) GetAuth(ctx *gin.Context){
 		global.JsonRet(ctx, global.ERROR, "用户不存在", nil)
 		return
 	}
-	var jwtSecret = []byte(setting.AppSetting.JwtSecret)
+	var jwtSecret = []byte(setting.DeployConfig.App.JwtSecret)
 	token, err := util.GenerateToken(id, username, jwtSecret)//生成token
 	if err != nil {
 		global.JsonRet(ctx, global.ERROR_AUTH_TOKEN, "", nil)

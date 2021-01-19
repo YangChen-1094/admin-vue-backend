@@ -34,14 +34,18 @@ func main() {
 	//	log.Printf("Actual pid is %d", syscall.Getpid())//启动时输出pid
 	//}
 	modelGrpc.Register()
-	redisGame := setting.StoreConfig.GetRedisClient("1", "session_slave")
-	val, _ := redisGame.Get("test").Result()
-	fmt.Println("redis test:", val)
+	Mysql := setting.Mysql.GetMysqlClient("wbAdminDatas", "")
+	data := models.ItemType{}
+	errs := Mysql.Where("id=?", 12).Find(&data).Error
+	fmt.Println("Mysql wbAdminDatas:", Mysql)
+	fmt.Println("Mysql data:", data)
+	fmt.Println("errs:", errs)
+
 	server := &http.Server{
-		Addr:           fmt.Sprintf("%s:%d", setting.ServerSetting.HttpIp,setting.ServerSetting.HttpPort),
+		Addr:           fmt.Sprintf("%s:%d", setting.DeployConfig.Server.HttpIp,setting.DeployConfig.Server.HttpPort),
 		Handler:        router,
-		ReadTimeout:    setting.ServerSetting.ReadTimeOut,
-		WriteTimeout:   setting.ServerSetting.WriteTimeOut,
+		ReadTimeout:    setting.DeployConfig.Server.ReadTimeOut,
+		WriteTimeout:   setting.DeployConfig.Server.WriteTimeOut,
 		MaxHeaderBytes: 1 << 20, //请求头的最大字节数 2^20 即：1024 * 1024b => 1M
 	}
 	err := server.ListenAndServe()

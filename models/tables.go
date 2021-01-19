@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	"my_gin/pkg/setting"
+	"time"
+)
 
 //表明组成前缀+结构名（小写）
 
@@ -64,4 +67,13 @@ type ItemType struct {
 	Id       int    `json:"id"              gorm:"primary_key;column:id"`
 	Itemtype string `json:"itemtype"        gorm:"column:itemtype"`
 	Typename string `json:"typename"        gorm:"column:typename" `
+}
+
+//定义表名，不然会视为加"s"的表： bh_item_configs表
+func (ItemConfig) TableName() string {
+	return setting.DeployConfig.Database.TablePrefix + "item_config"
+}
+
+func (ItemType) TableName() string {
+	return setting.DeployConfig.Database.TablePrefix + "item_type"
 }

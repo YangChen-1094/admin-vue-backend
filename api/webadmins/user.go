@@ -81,7 +81,7 @@ func (this *User) Login(ctx *gin.Context){
 		return
 	}
 
-	var jwtSecret = []byte(setting.AppSetting.JwtSecret)
+	var jwtSecret = []byte(setting.DeployConfig.App.JwtSecret)
 	//使用jwt 作为区分每个用户的token
 	token, err := util.GenerateToken(id, username, jwtSecret)//生成token
 	if err != nil {

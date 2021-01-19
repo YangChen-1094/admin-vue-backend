@@ -41,7 +41,7 @@ func JWT() gin.HandlerFunc {
 		if token == "" {
 			code = global.LOGIN_ERROR
 		} else {
-			var jwtSecret = []byte(setting.AppSetting.JwtSecret)
+			var jwtSecret = []byte(setting.DeployConfig.App.JwtSecret)
 			tokenParam, err := util.ParseToken(token, jwtSecret)
 			if tokenParam == nil || err != nil { //验证token失败
 				code = global.ERROR_AUTH_CHECK_TOKEN_FAIL
