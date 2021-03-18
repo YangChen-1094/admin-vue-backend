@@ -8,6 +8,7 @@ import (
 	"my_gin/models"
 	"my_gin/pkg/global"
 	"my_gin/pkg/util"
+	"strconv"
 	"strings"
 )
 
@@ -25,10 +26,12 @@ func (this *item) List(ctx *gin.Context){
 	data := make(map[string]interface{})
 	aType := modelItem.GetItemType()
 
+	data["page"] = page
+	data["size"] = size
+	data["total"] = modelItem.GetItemCount()
 	data["list"] = itemList
 	data["aType"] = aType
 	data["usetype"] = models.UseType
-	data["count"] = modelItem.GetItemCount()
 	global.JsonRet(ctx, global.SUCCESS, "", data)
 	return
 }
@@ -45,12 +48,14 @@ func (this *item) Modify(ctx *gin.Context){
 		return
 	}
 
-	checkUseType := ctx.PostFormMap("checkUseType")
+	checkUseType := ctx.PostFormMap("usetype")
+	fmt.Println(checkUseType)
 	var aType []int
-	for _, typeName := range checkUseType {
-		typeId,exists := models.UseTypeNameId[typeName]
+	for _, typeId := range checkUseType {
+		id, _ := strconv.Atoi(typeId)
+		_, exists := models.UseType[id]
 		if exists {
-			aType = append(aType, typeId)
+			aType = append(aType, id)
 		}
 	}
 	var sType string
@@ -59,18 +64,26 @@ func (this *item) Modify(ctx *gin.Context){
 	}else{
 		sType = ""
 	}
+
+	fmt.Println("aType:", aType, "; sType:",sType)
 	param["productID"] = ""
 	param["usetype"] = sType
 	param["itemid"] = itemid
 	param["itemname"] = itemname
 	param["type"] = com.StrTo(ctx.DefaultPostForm("type", "0")).MustInt()
 	param["descr"] = com.StrTo(strings.TrimSpace(ctx.DefaultPostForm("descr", ""))).String()
-	param["imgUrl"] = com.StrTo(strings.TrimSpace(ctx.DefaultPostForm("imgUrl", ""))).String()
 	param["buttonUrl"] = com.StrTo(strings.TrimSpace(ctx.DefaultPostForm("buttonUrl", ""))).String()
 	param["bannerUrl"] = com.StrTo(strings.TrimSpace(ctx.DefaultPostForm("bannerUrl", ""))).String()
 	param["buttonDesc"] = com.StrTo(strings.TrimSpace(ctx.DefaultPostForm("buttonDesc", ""))).String()
 
+	imgUrl := com.StrTo(strings.TrimSpace(ctx.DefaultPostForm("imgUrl", ""))).String()
+	imgUrlMedium := com.StrTo(strings.TrimSpace(ctx.DefaultPostForm("imgUrlMedium", ""))).String()
+	imgUrlLow := com.StrTo(strings.TrimSpace(ctx.DefaultPostForm("imgUrlLow", ""))).String()
+	arr := []string{imgUrl, imgUrlMedium, imgUrlLow}
+	imgUrl = util.Implode(arr, "#")
+	param["imgUrl"] = imgUrl
 	param["price"] = com.StrTo(ctx.DefaultPostForm("price", "0")).String()
+
 	var err error
 	if id == 0 {
 		err = modelItem.Insert(param)
@@ -87,9 +100,9 @@ func (this *item) Modify(ctx *gin.Context){
 
 func (this *item) Delete(ctx *gin.Context){
 	data := make(map[string]interface{})
-	modelChannel := models.NewModelChannel()
+	modelItem := models.NewModelItem()
 	id := com.StrTo(ctx.PostForm("id")).MustInt()
-	del := modelChannel.Del(id)
+	del := modelItem.Del(id)
 	if del {
 		global.JsonRet(ctx, global.SUCCESS, "", data)
 	}else{
@@ -107,12 +120,13 @@ func (this *item) SetRedis(ctx *gin.Context){
 	param["channelId"] = com.StrTo(ctx.PostForm("channelId")).String()
 
 	var itemJsonString = make(map[string]interface{})
-	for i, oneItem := range itemList{
+	i := 0
+	for _, oneItem := range itemList{
 		jsonVal, _ := json.Marshal(oneItem)
-		key := com.StrTo(i).String()
-		itemJsonString[key] = string(jsonVal)
+		stringNum := strconv.Itoa(i)
+		itemJsonString[stringNum] = string(jsonVal)
+		i++
 	}
-	fmt.Println("oneItem json: ", itemJsonString)
 	models.RedisMgr.RdsClient.HMSet("item-test", itemJsonString)
 	if true {
 		global.JsonRet(ctx, global.SUCCESS, "", data)

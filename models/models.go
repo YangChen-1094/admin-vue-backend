@@ -62,7 +62,10 @@ func NewModelChannel() *ModelChannel{
 }
 
 func NewModelItem() *ModelItem{
-	return &ModelItem{}
+	return &ModelItem{
+		TblItemConfig: setting.DeployConfig.Database.TablePrefix + "item_config",
+		TblItemType: setting.DeployConfig.Database.TablePrefix + "item_type",
+	}
 }
 func NewModelCron()*ModelCron{
 	return &ModelCron{}

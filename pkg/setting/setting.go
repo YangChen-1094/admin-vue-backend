@@ -68,7 +68,7 @@ var Cfg *ini.File
 //“Config”结尾的配置的具体参数key-val
 var Aws = &AwsCfg{}
 var Redis = &RedisCfg{
-	RedisClient: make(map[string][]*redis.Client),
+	RedisClient: make(map[string][]*redis.Client),//如果不初始化 map（即通过make初始化），那么就会创建一个 nil map。nil map 不能用来存放键值对
 }
 var Mysql = &MysqlCfg{
 	MysqlClient: make(map[string][]*gorm.DB),
@@ -128,8 +128,9 @@ func loadAllDb(runEnv string){
 		log.Fatalf("loading 'Redis.LoadRedisCfg' Failed, err: %v", err)
 	}
 	err = Mysql.LoadMysqlCfg(runEnv)
+	fmt.Println(Mysql)
 	if err != nil {
-		log.Fatalf("loading 'Redis.LoadRedisCfg' Failed, err: %v", err)
+		log.Fatalf("loading 'Redis.LoadMysqlCfg' Failed, err: %v", err)
 	}
 
 	err = Aws.LoadAwsCfg(runEnv)

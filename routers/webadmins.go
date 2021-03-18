@@ -20,10 +20,18 @@ func initWebAdminsRouters(router *gin.Engine){
 		initChannelRouter(webGroup)
 		initDeployRouter(webGroup)
 		initSystemRouter(webGroup)
-		iniItemRouter(webGroup)
+		initItemRouter(webGroup)
+		initPropRouter(webGroup)
 	}
 }
 
+func initPropRouter(webGroup *gin.RouterGroup){
+	props := webGroup.Group("/props")//webadmins 下的props路由组
+	{
+		api := webadmins.NewUser()
+		props.GET("/vcode", api.Code)
+	}
+}
 
 
 //用户相关
@@ -55,12 +63,13 @@ func initChannelRouter(webGroup *gin.RouterGroup){
 }
 
 //道具的接口
-func iniItemRouter(webGroup *gin.RouterGroup){
+func initItemRouter(webGroup *gin.RouterGroup){
 	channel := webGroup.Group("/item")//webadmins 下的channel路由组
 	{
 		api := webadmins.NewItem()
 		channel.POST("/list", api.List)
 		channel.POST("/modify", api.Modify)
+		channel.POST("/del", api.Delete)
 		channel.POST("/setRedis", api.SetRedis)
 	}
 }

@@ -1,0 +1,92 @@
+{
+  "redis": {
+	"game": [
+	  {
+		"addr": "127.0.0.1:6379",
+		"password": "",
+		"db": 0,
+		"pool_size": 10
+	  }
+	],
+	"order": [
+	  {
+		"addr": "127.0.0.1:6379",
+		"password": "",
+		"db": 0,
+		"pool_size": 10
+	  }
+	],
+	"mail": [
+	  {
+		"addr": "127.0.0.1:6379",
+		"password": "",
+		"db": 0,
+		"pool_size": 10
+	  }
+	],
+	"session": [
+	  {
+		"addr": "127.0.0.1:6379",
+		"password": "",
+		"db": 0,
+		"pool_size": 10
+	  }
+	],
+	"session_slave": [
+	  {
+		"addr": "127.0.0.1:6379",
+		"password": "",
+		"db": 0,
+		"pool_size": 10
+	  },
+	  {
+		"addr": "127.0.0.1:6379",
+		"password": "",
+		"db": 0,
+		"pool_size": 10
+	  }
+	]
+  },
+  "mysql": {
+	"wbAdminDatas": [
+	  {
+		"type" : "mysql",
+		"user": "root",
+		"password": "abcd1234",
+		"host": "127.0.0.1:3306",
+		"name": "mhjy_admins",
+		"table_prefix": "bh_",
+		"max_conn" : 10,
+		"max_open" : 100
+	  },{
+		"type" : "mysql",
+		"user": "root",
+		"password": "abcd1234",
+		"host": "127.0.0.1:3306",
+		"name": "mhjy_admins",
+		"table_prefix": "bh_",
+		"max_conn" : 10,
+		"max_open" : 100
+	  }
+	],
+	"wbAdminLogs": [
+	  {
+		"type" : "mysql",
+		"user": "root",
+		"password": "abcd1234",
+		"host": "127.0.0.1:3306",
+		"name": "mhjy_admins_logs",
+		"table_prefix": "bh_",
+		"max_conn" : 10,
+		"max_open" : 100
+	  }
+	]
+  },
+  "web":[
+	"http://10.72.17.162:93/"
+  ],
+  "mongo": [
+	"mongodb://127.0.0.1:27017"
+  ]
+
+}

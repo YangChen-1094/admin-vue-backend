@@ -17,7 +17,7 @@ type RedisConfig struct {
 
 type RedisCfg struct {
 	RedisInit   bool
-	RedisClient map[string][]*redis.Client
+	RedisClient map[string][]*redis.Client		//如果不初始化 map（即通过make初始化），那么就会创建一个 nil map。nil map 不能用来存放键值对
 	RedisList   map[string][]*RedisConfig `json:"redis"`
 }
 //加载store.json配置

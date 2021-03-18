@@ -1,0 +1,1 @@
+[INFO][models/item.go:90] 2021/03/11 15:25:03.270825 [channel [Del]  Del err:  Error 1054: Unknown column 'bh_channel.id' in 'where clause']
